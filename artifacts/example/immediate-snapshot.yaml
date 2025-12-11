@@ -1,0 +1,7 @@
+apiVersion: snapitcontroller.controller.io/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: immediate-snapshot
+spec:
+  pvcName: my-data-pvc
+  snapshotClassName: csi-hostpath-snapclass
