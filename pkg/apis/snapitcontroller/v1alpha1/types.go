@@ -57,6 +57,8 @@ type SnapshotPolicyStatus struct {
 	// LastSnapshotTime indicates when the last snapshot was created
 	LastSnapshotTime *metav1.Time `json:"lastSnapshotTime,omitempty"`
 
+	LastProcessedRequestID string `json:"lastProcessedRequestID,omitempty"`
+
 	// Phase indicates the current state of snapshot operation: Pending, InProgress, Succeeded, Failed
 	Phase string `json:"phase,omitempty"`
 
