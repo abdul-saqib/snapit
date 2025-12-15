@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snapit-controller
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snapit-controller
+  template:
+    metadata:
+      labels:
+        app: snapit-controller
+    spec:
+      serviceAccountName: snapit-controller
+      containers:
+        - name: snapit-controller
+          image: localhost/snapit-controller:latest
+          imagePullPolicy: IfNotPresent

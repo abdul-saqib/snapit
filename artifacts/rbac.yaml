@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: snapit-controller
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: snapit-controller-role
+rules:
+  - apiGroups: ["snapitcontroller.controller.io"]
+    resources:
+      - snapshotpolicies
+      - snapshotpolicies/status
+      - snapshotpolicies/finalizers
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: snapit-controller-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: snapit-controller-role
+subjects:
+  - kind: ServiceAccount
+    name: snapit-controller
+    namespace: default

@@ -1,0 +1,21 @@
+IMAGE_NAME=snapit-controller
+VERSION=latest
+KIND_CLUSTER=kind
+
+.PHONY: build load deploy all
+
+build:
+	 podman build -t $(IMAGE_NAME) .
+
+load:
+	rm -f $(IMAGE_NAME).tar
+	podman save -o $(IMAGE_NAME).tar localhost/$(IMAGE_NAME):$(VERSION)
+	kind load image-archive $(IMAGE_NAME).tar --name dev-cluster
+	rm -f $(IMAGE_NAME).tar
+
+deploy:
+	 kubectl apply -f artifacts/rbac.yaml
+	 kubectl apply -f artifacts/crd.yaml
+	 kubectl apply -f artifacts/controller_deployment.yaml
+
+all: build load deploy
